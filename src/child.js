@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import { TransactionContext } from "./transactionContext";
 
 function Child() {
-  let { trans, addTransaction } = useContext(TransactionContext);
-  console.log(trans[0]);
+  let { transactions, addTransaction } = useContext(TransactionContext);
+
   let [newDesc, setDesc] = useState("");
   let [newAmount, setAmount] = useState(0);
 
@@ -24,16 +24,16 @@ function Child() {
 
   const getIncome = () => {
     let income = 0;
-    for (var i = 0; i < trans.length; i++) {
-      if (trans[i].amount > 0) income = income + trans[i].amount;
+    for (var i = 0; i < transaction.length; i++) {
+      if (transaction[i].amount > 0) income = income + transaction[i].amount;
     }
     return income;
   };
 
   const getExpense = () => {
     let expense = 0;
-    for (var i = 0; i < trans.length; i++) {
-      if (trans[i].amount < 0) expense += trans[i].amount;
+    for (var i = 0; i < transaction.length; i++) {
+      if (transaction[i].amount < 0) expense += transaction[i].amount;
     }
     return expense;
   };
@@ -43,7 +43,7 @@ function Child() {
       <h1 className="text-center">Expense Tracker</h1>
       <h3>
         Your Balance <br />
-        $260
+        ${getIncome()+getExpense()}
       </h3>
 
       <div className="expense-container">
@@ -57,7 +57,7 @@ function Child() {
       <h3>History</h3>
 
       <ul className="transaction-list">
-        {trans.map((transObj, ind) => {
+        {transaction.map((transObj, ind) => {
           return (
             <li key={ind}>
               <span>{transObj.desc}</span>
